@@ -14609,7 +14609,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Cap%C3%ADtulo-1:-Limpieza-de-Datos">Cap&#237;tulo 1: Limpieza de Datos<a class="anchor-link" href="#Cap%C3%ADtulo-1:-Limpieza-de-Datos">&#182;</a></h1>
+<h1 id="Cap%C3%ADtulo-1:-Limpieza-de-Datos">Cap&#237;tulo 1: Limpieza de Datos<a class="anchor-link" href="#Cap%C3%ADtulo-1:-Limpieza-de-Datos">&#182;</a></h1><h3 id="Desarrollado-por:-Ing.-Julian-Quimbayo-Castro">Desarrollado por: Ing. Julian Quimbayo Castro<a class="anchor-link" href="#Desarrollado-por:-Ing.-Julian-Quimbayo-Castro">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14630,9 +14630,9 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <li><a href="#5">5. Datos texto a numérico</a></li>
 <li><a href="#6">6. One Hot Encoder y label encoder</a></li>
 <li><a href="#7">7. Partición Dataframes</a></li>
-<li><a href="#8">8. Normalización y estandarización</a></li>
-<li><a href="#9">9. Oversampling y undersampling</a></li>
-<li><a href="#10">10. Extracción data limpia</a></li>
+<li><a href="#8">8. Oversampling y undersampling</a></li>
+<li><a href="#9">9. Normalización y estandarización</a></li>
+<li><a href="#10">10. Correlaciones Pearson y Spearman</a></li>
 </ul>
 
 </div>
@@ -14964,7 +14964,50 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="8.-Normalizaci%C3%B3n-y-estandarizaci%C3%B3n"><a id="8">8. Normalizaci&#243;n y estandarizaci&#243;n</a><a class="anchor-link" href="#8.-Normalizaci%C3%B3n-y-estandarizaci%C3%B3n">&#182;</a></h2><hr>
+<h2 id="8.-Oversampling-y-undersamplig"><a id="8">8. Oversampling y undersamplig</a><a class="anchor-link" href="#8.-Oversampling-y-undersamplig">&#182;</a></h2><hr>
+<p>Uno de los problemas más grandes es el balanceo del dataset con base en la variable que se va a escoger como <strong>predictora o clasificadora</strong>, es por esta situación y con el fin de que el algoritmo de machine learning actúe con coherencia existe las técnicas de resample (OverSampling y UnderSampling).</p>
+<p><img src="../Imagenes/overunder.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;"></p>
+<ol>
+<li><strong>Oversampling:</strong></li>
+</ol>
+<p>permite tomar la clase minoritaria y nivelarla con base en la mayoritaria.</p>
+<ol>
+<li><strong>Undersampling:</strong></li>
+</ol>
+<p>permite tomar la clase mayoritaria y nivelarla con base en la minoritaria.</p>
+<p>Ambos resultados se deben probar por medio de un algoritmo de machine learning ya que a simple vista no es posible determinar cual es el más eficiente si un dataset a la alta o a la baja.</p>
+<ul>
+<li><strong>OverSampling</strong>:</li>
+</ul>
+<h4 id="Oversampling-y-undersampling---nivelar-el-dataset-con-la-variable-que-va-a-ser-mi-predictora-o-clasificadora">Oversampling y undersampling - nivelar el dataset con la variable que va a ser mi predictora o clasificadora<a class="anchor-link" href="#Oversampling-y-undersampling---nivelar-el-dataset-con-la-variable-que-va-a-ser-mi-predictora-o-clasificadora">&#182;</a></h4><p>dataF['CovidD'].value_counts()</p>
+<h4 id="paso-uno-separar-las-clases---mayoritaria-y-minoritaria">paso uno separar las clases - mayoritaria y minoritaria<a class="anchor-link" href="#paso-uno-separar-las-clases---mayoritaria-y-minoritaria">&#182;</a></h4><p>dataFMayor = dataF[dataF.CovidD==0]</p>
+<p>dataFMenor = dataF[dataF.CovidD==1]</p>
+<h4 id="Over-Sampling-sobre-la-clase-minoritaria">Over Sampling sobre la clase minoritaria<a class="anchor-link" href="#Over-Sampling-sobre-la-clase-minoritaria">&#182;</a></h4><p>df_minoritaria = resample(dataFMenor, 
+                                 replace=True,<br />
+                                 n_samples=60,<br />
+                                 random_state=123)</p>
+<h4 id="Combina-la-clase-mayoritaria-con-la-minoritaria-nivelada">Combina la clase mayoritaria con la minoritaria nivelada<a class="anchor-link" href="#Combina-la-clase-mayoritaria-con-la-minoritaria-nivelada">&#182;</a></h4><p>df_Over = pd.concat([dataFMayor, df_minoritaria])</p>
+<h4 id="Muestra-el-resultado-final">Muestra el resultado final<a class="anchor-link" href="#Muestra-el-resultado-final">&#182;</a></h4><p>df_Over.CovidD.value_counts()</p>
+<p><img src="../Imagenes/resover.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<ul>
+<li><strong>UnderSampling</strong>:</li>
+</ul>
+<h4 id="Under-Sampling-sobre-la-clase-mayoritaria">Under Sampling sobre la clase mayoritaria<a class="anchor-link" href="#Under-Sampling-sobre-la-clase-mayoritaria">&#182;</a></h4><p>df_mayoritaria = resample(dataFMayor, 
+                                 replace=False,<br />
+                                 n_samples=39,<br />
+                                 random_state=123)</p>
+<h4 id="Combina-la-clase-minoritaria-con-la-mayoritaria-nivelada-a-la-baja">Combina la clase minoritaria con la mayoritaria nivelada a la baja<a class="anchor-link" href="#Combina-la-clase-minoritaria-con-la-mayoritaria-nivelada-a-la-baja">&#182;</a></h4><p>df_Under = pd.concat([df_mayoritaria, dataFMenor])</p>
+<h4 id="Muestra-el-resultado-final">Muestra el resultado final<a class="anchor-link" href="#Muestra-el-resultado-final">&#182;</a></h4><p>df_Under.CovidD.value_counts()</p>
+<p><img src="../Imagenes/resunder.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
 <p><a href="#11">Volver a Casa</a></p>
 
 </div>
@@ -14977,7 +15020,47 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="9.-Oversampling-y-undersamplig"><a id="9">9. Oversampling y undersamplig</a><a class="anchor-link" href="#9.-Oversampling-y-undersamplig">&#182;</a></h2><hr>
+<h2 id="9.-Normalizaci%C3%B3n-y-estandarizaci%C3%B3n"><a id="9">9. Normalizaci&#243;n y estandarizaci&#243;n</a><a class="anchor-link" href="#9.-Normalizaci%C3%B3n-y-estandarizaci%C3%B3n">&#182;</a></h2><hr>
+<ol>
+<li><strong>La Normalización:</strong></li>
+</ol>
+<p>Es el proceso por el cual se cambian los valores de las columnas numéricas del conjunto de datos para usar una escala común, sin distorsionar las diferencias en los intervalos de valores ni perder información.</p>
+<p>Cabe resaltar que dicha normalización se utiliza cuando la data no es normal, es decir según la estadística aplicando algún test de normalidad (Shapiro-wilk, kolmogorov-smirnov, D'agostino, etc), si el <strong>valor de P es menor a 0.05 se dice que la columna o variable no es normal</strong>, por el contrario si el <strong>valor de P es mayor a 0.05 se dice que los datos se encuntran en el segmento de confianza (95%) lo cual se asume como normal</strong>.</p>
+<p><span style="color:blue">Nota: La normalización se usa cuando los valores no son normales según algun test aplicado y se ajustan los datos entre 0 y 1. Afecta los datos que ya estan en esa escala reduciendolos más.</span></p>
+<ol start="2">
+<li><strong>La Estandarización:</strong></li>
+</ol>
+<p>En aplicaciones prácticas, a menudo nos encontramos con un conjunto de datos que contiene una variedad de características, a menudo con diferentes distribuciones e intervalos, con diferentes niveles (dimensión), que es fácil de afectar nuestra capacitación modelo.La estandarización de datos es eliminar los efectos de la escala, la característica y las diferencias de distribución en el modelo.</p>
+<p><span style="color:blue">Nota: La estandarización se usa cuando los valores son normales según algun test aplicado y se ajustan los datos entre -1 y 1. No afecta los datos que ya estan en esa escala de 0 a 1.</span></p>
+<h4 id="Ejemplo-Normalizaci%C3%B3n-y-Estandarizaci%C3%B3n:">Ejemplo Normalizaci&#243;n y Estandarizaci&#243;n:<a class="anchor-link" href="#Ejemplo-Normalizaci%C3%B3n-y-Estandarizaci%C3%B3n:">&#182;</a></h4><p><strong>Gráfico de caja para revisar el estado actual de los datos</strong></p>
+<p>dataF.plot.box()</p>
+<p><img src="../Imagenes/grafcaja.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p><strong>No hay normalidad en los datos al no tener las mismas medias. Se normaliza y los valores quedan de la siguiente manera. Se deben fijar que los valores están entre 0 y 1.</strong></p>
+<p><img src="../Imagenes/grafcajados.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p><strong>Para el segundo caso de estandarización se tomó la misma data. Se realiza el proceso y los valores quedan de la siguiente manera. Se deben fijar que los valores están entre -1 y 1.</strong></p>
+<p><img src="../Imagenes/grafcajatres.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p><a href="#11">Volver a Casa</a></p>
+
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="10.-Correlaci%C3%B3n-de-Pearson-y-Spearman"><a id="10">10. Correlaci&#243;n de Pearson y Spearman</a><a class="anchor-link" href="#10.-Correlaci%C3%B3n-de-Pearson-y-Spearman">&#182;</a></h2><hr>
 <p><a href="#11">Volver a Casa</a></p>
 
 </div>
