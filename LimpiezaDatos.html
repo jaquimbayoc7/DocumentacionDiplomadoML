@@ -15061,6 +15061,63 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="10.-Correlaci%C3%B3n-de-Pearson-y-Spearman"><a id="10">10. Correlaci&#243;n de Pearson y Spearman</a><a class="anchor-link" href="#10.-Correlaci%C3%B3n-de-Pearson-y-Spearman">&#182;</a></h2><hr>
+El primer paso para entender la correlación y su significado es darnos cuenta que existen muchas manera de poder indentificar la relación entre las variables sea linear, monótona o independientes. Para esto como se evidencia en la figura existe un mecanismo para identificar dicho proceso.
+<p><img src="../Imagenes/analisis.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p>Como se puede evidenciar para datos de tipo numérico se utiliza la famosa correlación de pearson o spearman las cuales determinan numéricamente cual es la relación existente entre una variable y otra.</p>
+<p>Esto se apoya con base en la covarianza que mide el grado de variación conjunta entre dos variables aleatorias. Existen diferentes tipos, de entre los que destacan el Pearson, Rho de Spearman y Tau de Kendall. Todos ellos comparten que:</p>
+<p>Su valor está comprendido en el rango [+1 , -1]. Siendo +1 una correlación positiva perfecta y -1 una correlación negativa perfecta.</p>
+<p>Se emplean como medida de la fuerza de asociación entre dos variables (tamaño del efecto):</p>
+<p>0: asociación nula.</p>
+<p>0.1: asociación pequeña.</p>
+<p>0.3: asociación mediana.</p>
+<p>0.5: asociación moderada.</p>
+<p>0.7: asociación alta.</p>
+<p>0.9: asociación muy alta.</p>
+<p>Desde el punto de vista práctico, las principales diferencias entre estos tres coeficientes son:</p>
+<p>La correlación de Pearson funciona bien con variables cuantitativas que tienen una distribución normal o próxima a la normal. Es más sensible a los valores extremos que las otras dos alternativas.</p>
+<p>La correlación de Spearman se emplea con variables cuantitativas (continuas o discretas). En lugar de utilizar directamente el valor de cada variable, los datos son ordenados y reemplazados por su respectivo orden ranking. Es un método no paramétrico muy utilizado cuando no se satisface la condición de normalidad necesaria para aplicar la correlación de Pearson.</p>
+<p>La correlación de Kendall es otra alternativa no paramétrica que, al igual que la correlación de Spearman, utiliza la ordenación de las observaciones ranking. Es recomendable cuando se dispone de pocos datos y muchos de ellos ocupan la misma posición en el rango, es decir, cuando hay muchas ligaduras.</p>
+<p>Ejemplo de Correlación modo Gráfico:
+fig, ax = plt.subplots(1, 1, figsize=(6,4))</p>
+<p>ax.scatter(x=datos.height, y=datos.weight, alpha= 0.8)</p>
+<p>ax.set_xlabel('Altura')</p>
+<p>ax.set_ylabel('Peso')</p>
+<p><img src="../Imagenes/corr.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<h2 id="Correlaciones-con-Pandas">Correlaciones con Pandas<a class="anchor-link" href="#Correlaciones-con-Pandas">&#182;</a></h2><p>print('Correlación Pearson: ', datos['weight'].corr(datos['height'], method='pearson'))</p>
+<p>print('Correlación spearman: ', datos['weight'].corr(datos['height'], method='spearman'))</p>
+<p>print('Correlación kendall: ', datos['weight'].corr(datos['height'], method='kendall'))</p>
+<h2 id="Correlaciones-con-Scipy">Correlaciones con Scipy<a class="anchor-link" href="#Correlaciones-con-Scipy">&#182;</a></h2><p>r, p = stats.pearsonr(datos['weight'], datos['height'])
+print(f&quot;Correlación Pearson: r={r}, p-value={p}&quot;)</p>
+<p>r, p = stats.spearmanr(datos['weight'], datos['height'])
+print(f&quot;Correlación Spearman: r={r}, p-value={p}&quot;)</p>
+<p>r, p = stats.kendalltau(datos['weight'], datos['height'])
+print(f&quot;Correlación Pearson: r={r}, p-value={p}&quot;)</p>
+<h2 id="Correlaciones-con-Pingouin">Correlaciones con Pingouin<a class="anchor-link" href="#Correlaciones-con-Pingouin">&#182;</a></h2><p>display(pg.corr(datos['weight'], datos['height'], method='pearson'))</p>
+<p>display(pg.corr(datos['weight'], datos['height'], method='spearman'))</p>
+<p>display(pg.corr(datos['weight'], datos['height'], method='kendall'))</p>
+<h2 id="Matriz-de-Correlaci%C3%B3n">Matriz de Correlaci&#243;n<a class="anchor-link" href="#Matriz-de-Correlaci%C3%B3n">&#182;</a></h2><p>corr_matrix = datos.corr(method='pearson')</p>
+<p><img src="../Imagenes/tablatidy.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p><img src="../Imagenes/tablatidydos.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<h2 id="Grafica-de-matriz-de-correlaci%C3%B3n">Grafica de matriz de correlaci&#243;n<a class="anchor-link" href="#Grafica-de-matriz-de-correlaci%C3%B3n">&#182;</a></h2><p><img src="../Imagenes/graficacor.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
+<p><img src="../Imagenes/graficacor2.png" alt="banner" style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;"></p>
 <p><a href="#11">Volver a Casa</a></p>
 
 </div>
